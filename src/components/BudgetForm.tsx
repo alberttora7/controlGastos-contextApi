@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState,useMemo } from "react"
 
 export default function BudgetForm() {
 
@@ -6,8 +6,10 @@ export default function BudgetForm() {
 
     const handleChange = (e : React.ChangeEvent<HTMLInputElement>) => {
       setBuget(e.target.valueAsNumber)
-
     }
+    const isValid  = useMemo(()=> {
+        return isNaN(budget) || budget <= 0
+    },[budget])
   return (
     <form  className="space-y-5">
         <div className="flex flex-col space-y-5">
@@ -27,8 +29,8 @@ export default function BudgetForm() {
         <input 
             value="Difinir Presupesto"
             type="submit" 
-            className="bg-cyan-600 hover:bg-cyan-500 cursor-poiter w-full p-2 text-white  font-mono uppercase"
-
+            className="bg-cyan-600 hover:bg-cyan-500 cursor-poiter w-full p-2 text-white  font-mono uppercas disabled:opacity-40"
+            disabled={isValid}
         />
     </form>
     
