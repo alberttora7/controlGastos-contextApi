@@ -1,8 +1,16 @@
 import { categories } from "../data/categoria";
+import { DatePicker } from "react-date-picker";
+import 'react-date-picker/dist/DatePicker.css';
+import 'react-calendar/dist/Calendar.css';
 
 
+type ValuePiece = Date | null;
+
+type Value = ValuePiece | [ValuePiece, ValuePiece]
 
 export default function ExpenseForm() {
+
+
   return (
     <form className="space-y-5">
         <legend 
@@ -51,6 +59,15 @@ export default function ExpenseForm() {
                         >{category.name}</option>
                     ))}
             </select>
+        </div>
+
+        <div className="flex flex-col gap-2">
+                <label
+                htmlFor="amount"
+                className="text-xl">Fecha de gasto</label>
+         <DatePicker 
+            className="bg-slete-100 p-2 border-0" />
+         
         </div>
 
         <input
