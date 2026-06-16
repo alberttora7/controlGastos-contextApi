@@ -1,5 +1,5 @@
-import { useState } from "react";
-import type { DraftExpense } from "../types";
+import { useState, type ChangeEvent } from "react";
+import type { DraftExpense, Value } from "../types";
 import { categories } from "../data/categoria";
 import { DatePicker } from "react-date-picker";
 import 'react-date-picker/dist/DatePicker.css';
@@ -15,6 +15,23 @@ const [expense, setExpense] = useState<DraftExpense>({
     category:'',
     date: new Date()
 })
+
+const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target
+    const isAmounField = ['amount'].includes(name)
+setExpense({
+    ...expense,
+    [name]: isAmounField ? Number(value) : value
+})
+}
+
+const handleChangeDate = (value : Value) => {
+    setExpense({
+        ...expense,
+        date: value
+    })
+}
+
 
   return (
     <form className="space-y-5">
@@ -32,6 +49,7 @@ const [expense, setExpense] = useState<DraftExpense>({
                 className="bg-slate-100 p-2"
                 name="expenseName"
                 value={expense.expenseName}
+                onChange={handleChange}
             />
         </div>
 
@@ -46,6 +64,7 @@ const [expense, setExpense] = useState<DraftExpense>({
                 className="bg-slate-100 p-2"
                 name="amount"
                 value={expense.amount}
+                onChange={handleChange}
             />
         </div>
 
@@ -58,6 +77,7 @@ const [expense, setExpense] = useState<DraftExpense>({
                 className="bg-slate-100 p-2"
                 name="category"
                 value={expense.category}
+                onChange={handleChange}
             >
                 <option value="">-- Selecione --</option>
                     { categories.map(category => (
@@ -76,6 +96,7 @@ const [expense, setExpense] = useState<DraftExpense>({
          <DatePicker 
             className="bg-slete-100 p-2 border-0"
             value={expense.date}
+            onChange={handleChangeDate}
             />
          
         </div>
